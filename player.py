@@ -3,6 +3,8 @@ from turtle import Turtle
 
 PLAYER_SPEED = 10
 LASER_SPEED = 15
+STARTING_POSITION = (0, -260)
+
 
 class Player(Turtle):
 
@@ -11,8 +13,11 @@ class Player(Turtle):
         self.color("black")
         self.shapesize(stretch_wid=2, stretch_len=2)
         self.pu()
-        self.goto(0, -240)
+        self.goto(STARTING_POSITION)
         self.left(90)
+        self.lasers = []
+        self.lives = 3
+        self.last_hit_time = 0
 
     def go_left(self):
         new_xcor = self.xcor() - PLAYER_SPEED
@@ -25,7 +30,16 @@ class Player(Turtle):
     def shoot(self):
         pos = self.position()
         laser = LaserBolt(pos)
-        return laser  # return the created laser bolt
+        self.lasers.append(laser)  # add the new laser bolt to the list
+
+    def lose_life(self):
+        self.lives -= 1
+        self.color("red")
+
+    def player_reset(self):
+        self.color("black")
+        self.goto(STARTING_POSITION)
+        self.lasers = []
 
 
 class LaserBolt(Turtle):
@@ -41,3 +55,6 @@ class LaserBolt(Turtle):
 
     def move(self):
         self.forward(LASER_SPEED)
+
+    def erase(self):
+        self.hideturtle()
