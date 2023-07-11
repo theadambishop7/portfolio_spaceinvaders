@@ -87,8 +87,11 @@ class Board:
         return False
 
     def move_invader(self):
-        farthest_right = max(self.all_invaders, key=lambda invader: invader.xcor())
-        farthest_left = min(self.all_invaders, key=lambda invader: invader.xcor())
+        def find_xcor(unit):
+            return unit.xcor()
+
+        farthest_right = max(self.all_invaders, key=find_xcor)
+        farthest_left = min(self.all_invaders, key=find_xcor)
 
         if farthest_right.xcor() > 280 or farthest_left.xcor() < -280:
             self.bounce()
