@@ -22,7 +22,8 @@ counter = 0
 while True:
     counter += 1
     screen.tracer(0)
-    if board.get_bottom_invaders() == True:
+    # noinspection PySimplifyBooleanCheck
+    if board.get_bottom_invaders() is True:
         scoreboard.clear_board(invader_lasers, player)
         screen.update()
         scoreboard.player_lose()
